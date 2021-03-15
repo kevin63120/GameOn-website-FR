@@ -517,6 +517,10 @@ footer {
   }
 }
 
+.submit_clear{
+  display: none;
+}
+
 @keyframes modalopen {
   from {
     opacity: 0;
