@@ -333,6 +333,25 @@ input[data-error]::after {
   cursor: pointer;
   border: 0;
 }
+/*form send if valid */
+.form-send{
+  height: 690px;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: space-around;
+
+  
+}
+.form-send div {
+  position: relative;
+  top: 20%;
+  
+}
+
+
 /* custom select styles */
 .custom-select {
   position: relative;
@@ -517,9 +536,6 @@ footer {
   }
 }
 
-.submit_clear{
-  display: none;
-}
 
 @keyframes modalopen {
   from {

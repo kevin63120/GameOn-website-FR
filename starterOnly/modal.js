@@ -14,7 +14,8 @@ const formData = document.querySelectorAll(".formData");
 const modalBtnClose = document.querySelector(".close");
 const checkBoxInputs = document.querySelectorAll(".checkbox-input");
 const btnSubmit = document.querySelector(".btn-submit");
-const inputs = document.querySelectorAll("form_container"); 
+const formContainer = document.querySelector(".form_container"); 
+const finishSendButton = document.querySelector("#btn-send");
 
 //validator
 class validation {
@@ -67,7 +68,8 @@ function closeModal(){
 
 function isNotValid(event){
     event.target.style.backgroundColor=('#DC143C')
-   
+    
+    
     
     
 }
@@ -78,20 +80,37 @@ function isValid(event){
 }
 
 const createP = document.createElement('p');
-const createADiv=document.createElement('div')
+function createElement (elt) { 
+  return document.createElement(elt)}
 
+
+const regexLetter = /^[a-zA-Z]+$/;
+
+function isLettertest (value) {
+  return regexLetter.test(value)  };
 
 //name verification
 formData[0].addEventListener('change', function(event){
   let value = event.target.value;
-  if (value.length < 2 || value.length === 0 ){
+  
+  if ( value.length < 2 || !isLettertest(value) ){
    isNotValid(event) 
-   validations[nameValide.valide = false];
-   formData[0].appendChild(createADiv).innerHTML=(validations[0].err)
+   nameValide.valide = false;
+
+   if(formData[0].childElementCount < 5){
+    formData[0].appendChild(createElement("div")).innerHTML=(validations[0].err)
+    }
+  
   }
+
   else{
     isValid(event)
-    validations[nameValide.valide = true];
+    nameValide.valide = true;
+    
+    if(formData[0].childElementCount >= 5){
+      formData[0].childNodes[7].remove()
+      }
+    
     
   }
 })
@@ -99,15 +118,20 @@ formData[0].addEventListener('change', function(event){
 //lastname verification
 formData[1].addEventListener('change', function(event){
   let value = event.target.value;
-  if (value.length < 2 || value.length === 0 ){
+  if (value.length < 2 || value.length === 0 || !isLettertest(value)){
    isNotValid(event)
-   validations[lastNameValide.valide = false];
-   formData[1].appendChild(createADiv).innerHTML=(validations[1].err)
+   lastNameValide.valide = false;
+   if(formData[1].childElementCount < 5){
+    formData[1].appendChild(createElement("div")).innerHTML=(validations[1].err)
+    }
    
   } 
   else{
     isValid(event)
-    validations[lastNameValide.valide = true] ;
+    lastNameValide.valide = true ;
+    if(formData[1].childElementCount >= 5){
+      formData[1].childNodes[7].remove()
+      }
 
   }
 });
@@ -120,12 +144,19 @@ function isValidMail(value){
 
 formData[2].addEventListener("change", function (event){
   let value = event.target.value;
- if(isValidMail(value) == true) {
-   validations[emailValide.valide = true];
+ if(isValidMail(value)) {
+   emailValide.valide = true;
+   isValid(event)
+   if(formData[2].childElementCount >= 5){
+    formData[2].childNodes[7].remove()
+    }
+   
  }else{
     isNotValid(event)
-    validations[emailValide.valide = false];
-    formData[2].appendChild(createADiv).innerHTML=(validations[2].err)    
+    emailValide.valide = false;
+    if(formData[2].childElementCount < 5 ){
+      formData[2].appendChild(createElement("div")).innerHTML=(validations[2].err)
+      } 
   }
 })
 
@@ -133,18 +164,25 @@ formData[2].addEventListener("change", function (event){
 const dateRegex = /(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})/;
 
 function isValidDate(value){
+ 
   return dateRegex.test(value)
+
 }
 
 formData[3].addEventListener("change", function(event){
   let value = event.target.value;
-  if(isValidDate(value) == false){
+  if(!isValidDate(value)){
     isValid(event);
-    validations[birthdayValide.valide = true];
+    birthdayValide.valide = true;
+    if(formData[3].childElementCount >= 5){
+      formData[3].childNodes[7].remove()
+      }
   }else{
     isNotValid(event)
-    validations[birthdayValide.valide= false] ;
-    formData[3].appendChild(createADiv).innerHTML=(validations[3].err)
+    birthdayValide.valide= false ;
+    if(formData[3].childElementCount < 5){
+      formData[3].appendChild(createElement("div")).innerHTML=(validations[3].err)
+      }
     
   }
 })
@@ -152,25 +190,43 @@ formData[3].addEventListener("change", function(event){
 //participation in a competiton
 formData[4].addEventListener("change", function (event){
   let value = event.target.value;
-  if (value.length === 0 || isNaN(value)){
+  if (value.length === 0 || isNaN(value) || value < 0){
     isNotValid(event)
-    validations[numberOfParticipationValide.valide = false];
-    formData[4].appendChild(createADiv).innerHTML=(validations[4].err)
+    numberOfParticipationValide.valide = false;
+    if(formData[4].childElementCount < 4){
+      formData[4].appendChild(createElement("div")).innerHTML=(validations[4].err)
+      }
     
   }
   else{
     isValid(event)
-    validations[numberOfParticipationValide.valide = true];
+    numberOfParticipationValide.valide = true;
+    if(formData[4].childElementCount >= 4 ){
+      formData[4].childNodes[6].remove()
+      }
+   
   }
 });
 
 // select city
 formData[5].addEventListener("change", function (e){
  let  value = e.target.checked
-  if(value == true){
-    validations[cityValide.valide = true]}
-  else{
-    formData[5].appendChild(createADiv).innerHTML=(validations[5].err)
+ 
+  if(value){
+    cityValide.valide = true
+    if(formData[5].childElementCount >= 15){
+      formData[5].childNodes[7].remove()
+      }
+    
+  }
+  
+    else{
+    formData[5].childNodes[7].remove()
+    if(formData[5].childElementCount < 15){
+      formData[5].appendChild(createElement("div")).innerHTML=(validations[5].err)
+      }
+    
+    
 }
 
 })
@@ -179,15 +235,28 @@ formData[5].addEventListener("change", function (e){
 //select cgu 
 
 const cgu = document.getElementById("checkbox1")
-
-formData[6].addEventListener("change", function (e){
+const childCgu = 
+cgu.addEventListener("change", function (e){
   let value = e.target.checked;
-  if(value == true){
-    validations[cguValide.valide = true];
+  let valueTest= true;
+  if(value){
+    cguValide.valide = true;
+    formData[6].childNodes[13].remove()
+    if(formData[6].childElementCount >= 7){
+      formData[6].childNodes[13].remove()
+      }
+
   }
+  
   else {
-    validations[cguValide.valide = false];
-    formData[6].appendChild(createADiv).innerHTML=(validations[6].err)
+    
+    cguValide.valide = false;
+    if(formData[6].childElementCount < 7){
+      formData[6].appendChild(createElement("div")).innerHTML=(validations[6].err)
+      }
+    valueTest = false;
+     
+  
   }
 })
 
@@ -196,26 +265,33 @@ formData[6].addEventListener("change", function (e){
 function formAsCorrect(){
   formData.forEach(function(data){
     data.style.display="none"; })
-  formData[0].appendChild(createADiv).innerHTML("merci de votre envoi")
-  
+  formContainer.appendChild(createElement("div")).innerHTML="merci de votre envoi";
+  formContainer.classList.add("form-send");
+  finishSendButton.value.innerHTML="fermer";
+  finishSendButton.addEventListener('click', function(event){
+    closeModal(event)
+    
+  })
 }
+
+
+
+
 btnSubmit.addEventListener("click",function(e){
- let value = e.target.value;
+  
+  e.preventDefault()
+    const formValid = validations.every(function(validation){ return validation.valide})
+
+    if(formValid){
+   
+    formAsCorrect()
+    }
+    else{
+   
+    e.stopPropagation()
+    }
+
  
- for (validation of validations){ 
-   if (validation.valide === true){
-      e.preventDefault()
-      console.log(validation.title)
-     // formAsCorrect()
-     
-   }
-   else{
-     e.preventDefault()
-     // formData[validation].appendChild(createADiv).innerHTML(validation.err)
-     console.log ('err')
-     
-     }
-   }
  })
 
 
