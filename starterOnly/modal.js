@@ -28,7 +28,7 @@ class validation {
 let nameValide = new validation("name",false,"veuillez entrez deux caractère minimum");
 let lastNameValide = new validation("lastname",false,"veuillez entrez deux caractère minimum");
 let emailValide = new validation("email",false,"entrez un email valide");
-let birthdayValide = new validation("birthday",false,"entrez votre date de naissance");
+let birthdayValide = new validation("birthday",false,"entrez votre date de naissance ex: 10/02/1998");
 let numberOfParticipationValide = new validation("nombre de participation",false,"inscrivez le nombre de vos participation");
 let cityValide= new validation("ville de participation",false,"cochez une ville");
 let cguValide = new validation("cgu",true , "acceptation obligatoire CGU");
@@ -162,7 +162,7 @@ formData[2].addEventListener("change", function (event){
 })
 
 //birthday
-const dateRegex = /(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})/;
+const dateRegex = /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
 
 function isValidDate(value){
  
@@ -172,7 +172,7 @@ function isValidDate(value){
 
 formData[3].addEventListener("change", function(event){
   let value = event.target.value;
-  if(!isValidDate(value)){
+  if(isValidDate(value)){
     isValid(event);
     birthdayValide.valide = true;
     if(formData[3].childElementCount >= 5){
@@ -181,7 +181,7 @@ formData[3].addEventListener("change", function(event){
   }else{
     isNotValid(event)
     birthdayValide.valide= false ;
-    if(formData[3].childElementCount < 5){
+    if(formData[3].childElementCount <5){
       formData[3].appendChild(createElement("div")).innerHTML=(validations[3].err)
       }
     
