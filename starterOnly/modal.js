@@ -33,7 +33,7 @@ let numberOfParticipationValide = new validation("nombre de participation",false
 let cityValide= new validation("ville de participation",false,"cochez une ville");
 let cguValide = new validation("cgu",true , "acceptation obligatoire CGU");
 
-const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, cityValide, cguValide];
+const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, /*cityValide*/, cguValide];
 
 
 
@@ -145,8 +145,9 @@ function isValidMail(value){
 formData[2].addEventListener("change", function (event){
   let value = event.target.value;
  if(isValidMail(value)) {
-   emailValide.valide = true;
    isValid(event)
+   emailValide.valide = true;
+   
    if(formData[2].childElementCount >= 5){
     formData[2].childNodes[7].remove()
     }
@@ -190,10 +191,10 @@ formData[3].addEventListener("change", function(event){
 //participation in a competiton
 formData[4].addEventListener("change", function (event){
   let value = event.target.value;
-  if (value.length === 0 || isNaN(value) || value < 0){
+  if (  isNaN(value) || value < 0){
     isNotValid(event)
     numberOfParticipationValide.valide = false;
-    if(formData[4].childElementCount < 4){
+    if(formData[4].childElementCount < 4 || value.length == 0){
       formData[4].appendChild(createElement("div")).innerHTML=(validations[4].err)
       }
     
@@ -265,15 +266,25 @@ cgu.addEventListener("change", function (e){
 function formAsCorrect(){
   formData.forEach(function(data){
     data.style.display="none"; })
-  formContainer.appendChild(createElement("div")).innerHTML="merci de votre envoi";
-  formContainer.classList.add("form-send");
-  finishSendButton.value.innerHTML="fermer";
+   
+    formContainer.appendChild(createElement("div")).innerHTML="Merci ! Votre réservation a été reçue."; 
+    formContainer.classList.add("form-send");
+    
+    console.log(finishSendButton);
+
+  finishSendButton.innerHTML="fermer";
   finishSendButton.addEventListener('click', function(event){
+    event.preventDefault()
     closeModal(event)
+    formContainer.classList.remove("form-send")
+   formContainer.style.display="none"
+   
+   
+    
+  
     
   })
 }
-
 
 
 
@@ -285,6 +296,8 @@ btnSubmit.addEventListener("click",function(e){
     if(formValid){
    
     formAsCorrect()
+   // formContainer.appendChild(createElement("div")).innerHTML="Merci ! Votre réservation a été reçue."; 
+   // formContainer.classList.replace("form-send");
     }
     else{
    

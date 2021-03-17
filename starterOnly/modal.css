@@ -341,15 +341,16 @@ input[data-error]::after {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
 
   
 }
 .form-send div {
   position: relative;
-  top: 20%;
+  bottom: 50%;
   
 }
+
 
 
 /* custom select styles */
