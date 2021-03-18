@@ -17,7 +17,7 @@ const btnSubmit = document.querySelector(".btn-submit");
 const formContainer = document.querySelector(".form_container"); 
 const finishSendButton = document.querySelector("#btn-send");
 
-//validator
+//constructor  validation and err obj
 class validation {
   constructor(title , valide , err){
     this.title = title;
@@ -25,6 +25,7 @@ class validation {
     this.err = err;
   }
 }
+// objects for validation and error message include on input 
 let nameValide = new validation("name",false,"veuillez entrez deux caractère minimum");
 let lastNameValide = new validation("lastname",false,"veuillez entrez deux caractère minimum");
 let emailValide = new validation("email",false,"entrez un email valide");
@@ -33,17 +34,9 @@ let numberOfParticipationValide = new validation("nombre de participation",false
 let cityValide= new validation("ville de participation",false,"cochez une ville");
 let cguValide = new validation("cgu",true , "acceptation obligatoire CGU");
 
+//validation array 
 const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, /*cityValide*/, cguValide];
 
-
-
-//add element for array validator
-
- //récupérartion de chaque element du formulaire
-
- //for (let input of inputs){
-  // input.addEventListener("click", pushvalidationOnArrayValidator)
-// }
 
 
 
@@ -79,13 +72,14 @@ function isValid(event){
     
 }
 
-const createP = document.createElement('p');
+//const createP = document.createElement('p');
+//function for create element html 
 function createElement (elt) { 
   return document.createElement(elt)}
 
 
 const regexLetter = /^[a-zA-Z]+$/;
-
+// function for testing input user  
 function isLettertest (value) {
   return regexLetter.test(value)  };
 
@@ -187,11 +181,14 @@ formData[3].addEventListener("change", function(event){
     
   }
 })
-
+const numberRegex= /[0-9]/;
+function isValidNumber(value){
+  return numberRegex.test(value)
+}
 //participation in a competiton
 formData[4].addEventListener("change", function (event){
   let value = event.target.value;
-  if (  isNaN(value) || value < 0){
+  if (  !isValidNumber(value) || value < 0){
     isNotValid(event)
     numberOfParticipationValide.valide = false;
     if(formData[4].childElementCount < 4 || value.length == 0){
@@ -296,8 +293,7 @@ btnSubmit.addEventListener("click",function(e){
     if(formValid){
    
     formAsCorrect()
-   // formContainer.appendChild(createElement("div")).innerHTML="Merci ! Votre réservation a été reçue."; 
-   // formContainer.classList.replace("form-send");
+  
     }
     else{
    
