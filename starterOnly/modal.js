@@ -26,13 +26,13 @@ class validation {
   }
 }
 // objects for validation and error message include on input 
-let nameValide = new validation("name",false,"veuillez entrez deux caractère minimum");
-let lastNameValide = new validation("lastname",false,"veuillez entrez deux caractère minimum");
+let nameValide = new validation("name",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom");
+let lastNameValide = new validation("lastname",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom");
 let emailValide = new validation("email",false,"entrez un email valide");
-let birthdayValide = new validation("birthday",false,"entrez votre date de naissance ex: 10/02/1998");
-let numberOfParticipationValide = new validation("nombre de participation",false,"inscrivez le nombre de vos participation");
-let cityValide= new validation("ville de participation",false,"cochez une ville");
-let cguValide = new validation("cgu",true , "acceptation obligatoire CGU");
+let birthdayValide = new validation("birthday",false,"Vous devez entrer votre date de naissance ex: 10/02/1998");
+let numberOfParticipationValide = new validation("nombre de participation",false,"Inscrivez le nombre de vos participation");
+let cityValide= new validation("ville de participation",false,"Vous devez choisir une option.");
+let cguValide = new validation("cgu",true , "Vous devez vérifier que vous acceptez les termes et conditions.");
 
 //validation array 
 const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, cityValide, cguValide];
@@ -258,7 +258,7 @@ cgu.addEventListener("change", function (e){
     cguValide.valide = false;
     if(formData[6].childElementCount < 7){
       formData[6].appendChild(createElement("div")).innerHTML=(validations[6].err)
-      formData[3].childNodes[13].classList.add("err-input-response");
+      formData[6].childNodes[13].classList.add("err-input-response");
       }
     valueTest = false;
      
