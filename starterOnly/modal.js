@@ -35,7 +35,7 @@ let cityValide= new validation("ville de participation",false,"cochez une ville"
 let cguValide = new validation("cgu",true , "acceptation obligatoire CGU");
 
 //validation array 
-const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, /*cityValide*/, cguValide];
+const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, cityValide, cguValide];
 
 
 
@@ -60,7 +60,7 @@ function closeModal(){
 // verification of form
 
 function isNotValid(event){
-    event.target.style.backgroundColor=('#DC143C')
+    event.target.style.border=('#DC143C 3px solid')
     
     
     
@@ -68,7 +68,7 @@ function isNotValid(event){
 }
 
 function isValid(event){
-    event.target.style.backgroundColor=('green')
+    event.target.style.border=('green 3px solid')
     
 }
 
@@ -93,6 +93,7 @@ formData[0].addEventListener('change', function(event){
 
    if(formData[0].childElementCount < 5){
     formData[0].appendChild(createElement("div")).innerHTML=(validations[0].err)
+    formData[0].childNodes[7].classList.add("err-input-response");
     }
   
   }
@@ -117,6 +118,7 @@ formData[1].addEventListener('change', function(event){
    lastNameValide.valide = false;
    if(formData[1].childElementCount < 5){
     formData[1].appendChild(createElement("div")).innerHTML=(validations[1].err)
+    formData[1].childNodes[7].classList.add("err-input-response");
     }
    
   } 
@@ -151,6 +153,7 @@ formData[2].addEventListener("change", function (event){
     emailValide.valide = false;
     if(formData[2].childElementCount < 5 ){
       formData[2].appendChild(createElement("div")).innerHTML=(validations[2].err)
+      formData[2].childNodes[7].classList.add("err-input-response");
       } 
   }
 })
@@ -176,7 +179,9 @@ formData[3].addEventListener("change", function(event){
     isNotValid(event)
     birthdayValide.valide= false ;
     if(formData[3].childElementCount <5){
-      formData[3].appendChild(createElement("div")).innerHTML=(validations[3].err)
+      formData[3].appendChild(createElement("div")).innerHTML=(validations[3].err);
+      formData[3].childNodes[7].classList.add("err-input-response");
+    
       }
     
   }
@@ -193,6 +198,7 @@ formData[4].addEventListener("change", function (event){
     numberOfParticipationValide.valide = false;
     if(formData[4].childElementCount < 4 || value.length == 0){
       formData[4].appendChild(createElement("div")).innerHTML=(validations[4].err)
+      formData[4].childNodes[6].classList.add("err-input-response");
       }
     
   }
@@ -222,6 +228,7 @@ formData[5].addEventListener("change", function (e){
     formData[5].childNodes[7].remove()
     if(formData[5].childElementCount < 15){
       formData[5].appendChild(createElement("div")).innerHTML=(validations[5].err)
+      formData[5].childNodes[7].classList.add("err-input-response");
       }
     
     
@@ -251,6 +258,7 @@ cgu.addEventListener("change", function (e){
     cguValide.valide = false;
     if(formData[6].childElementCount < 7){
       formData[6].appendChild(createElement("div")).innerHTML=(validations[6].err)
+      formData[3].childNodes[13].classList.add("err-input-response");
       }
     valueTest = false;
      
