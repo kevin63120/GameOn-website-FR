@@ -19,20 +19,21 @@ const finishSendButton = document.querySelector("#btn-send");
 
 //constructor  validation and err obj
 class validation {
-  constructor(title , valide , err){
+  constructor(title , valide , err , selector){
     this.title = title;
     this.valide = valide;
     this.err = err;
+    this.selector = selector;
   }
 }
 // objects for validation and error message include on input 
-let nameValide = new validation("name",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom");
-let lastNameValide = new validation("lastname",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom");
-let emailValide = new validation("email",false,"entrez un email valide");
-let birthdayValide = new validation("birthday",false,"Vous devez entrer votre date de naissance ex: 10/02/1998");
-let numberOfParticipationValide = new validation("nombre de participation",false,"Inscrivez le nombre de vos participation");
-let cityValide= new validation("ville de participation",false,"Vous devez choisir une option.");
-let cguValide = new validation("cgu",true , "Vous devez vérifier que vous acceptez les termes et conditions.");
+let nameValide = new validation("name",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom", document.querySelector('.firstname'));
+let lastNameValide = new validation("lastname",false,"Veuillez entrer 2 caractères ou plus pour le champ du nom",  document.querySelector('.lastname'));
+let emailValide = new validation("email",false,"entrez un email valide",  document.querySelector('.email'));
+let birthdayValide = new validation("birthday",false,"Vous devez entrer votre date de naissance ex: 10/02/1998",  document.querySelector('.birthdate'));
+let numberOfParticipationValide = new validation("nombre de participation",false,"Inscrivez le nombre de vos participations",  document.querySelector('.number'));
+let cityValide= new validation("ville de participation",false,"Vous devez choisir une option.",  document.querySelector('.city'));
+let cguValide = new validation("cgu",true , "Vous devez vérifier que vous acceptez les termes et conditions.", document.querySelector('.conditions'));
 
 //validation array 
 const validations =  [nameValide, lastNameValide,  emailValide, birthdayValide, numberOfParticipationValide, cityValide, cguValide];
@@ -61,15 +62,24 @@ function closeModal(){
 
 function isNotValid(event){
     event.target.style.border=('#DC143C 3px solid')
-    
-    
-    
-    
+   
 }
 
 function isValid(event){
     event.target.style.border=('green 3px solid')
     
+}
+
+// function to add an attribute of element for can show the default message.
+function showFieldError(selector, error){
+  selector.setAttribute('data-error', error)
+  selector.setAttribute('data-error-visible', true)
+}
+
+// function to remove an attribute on element for can't show the default message
+function hideFieldError(selector){
+  selector.removeAttribute('data-error',)
+  selector.removeAttribute('data-errror-visible')
 }
 
 //const createP = document.createElement('p');
@@ -90,23 +100,13 @@ formData[0].addEventListener('change', function(event){
   if ( value.length < 2 || !isLettertest(value) ){
    isNotValid(event) 
    nameValide.valide = false;
-
-   if(formData[0].childElementCount < 5){
-    formData[0].appendChild(createElement("div")).innerHTML=(validations[0].err)
-    formData[0].childNodes[7].classList.add("err-input-response");
-    }
-  
+   showFieldError(nameValide.selector, nameValide.err)
   }
 
   else{
     isValid(event)
     nameValide.valide = true;
-    
-    if(formData[0].childElementCount >= 5){
-      formData[0].childNodes[7].remove()
-      }
-    
-    
+    hideFieldError(nameValide.selector)  
   }
 })
 
@@ -116,18 +116,14 @@ formData[1].addEventListener('change', function(event){
   if (value.length < 2 || value.length === 0 || !isLettertest(value)){
    isNotValid(event)
    lastNameValide.valide = false;
-   if(formData[1].childElementCount < 5){
-    formData[1].appendChild(createElement("div")).innerHTML=(validations[1].err)
-    formData[1].childNodes[7].classList.add("err-input-response");
-    }
    
+  showFieldError(lastNameValide.selector,lastNameValide.err ) 
   } 
   else{
     isValid(event)
     lastNameValide.valide = true ;
-    if(formData[1].childElementCount >= 5){
-      formData[1].childNodes[7].remove()
-      }
+  hideFieldError(lastNameValide.selector)
+  
 
   }
 });
@@ -135,7 +131,7 @@ formData[1].addEventListener('change', function(event){
 const regexMail= /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
 function isValidMail(value){
-   return /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/.test(value)
+   return regexMail.test(value)
 }
 
 formData[2].addEventListener("change", function (event){
@@ -143,22 +139,18 @@ formData[2].addEventListener("change", function (event){
  if(isValidMail(value)) {
    isValid(event)
    emailValide.valide = true;
-   
-   if(formData[2].childElementCount >= 5){
-    formData[2].childNodes[7].remove()
-    }
+  hideFieldError(emailValide.selector)
+  
    
  }else{
     isNotValid(event)
     emailValide.valide = false;
-    if(formData[2].childElementCount < 5 ){
-      formData[2].appendChild(createElement("div")).innerHTML=(validations[2].err)
-      formData[2].childNodes[7].classList.add("err-input-response");
-      } 
+    showFieldError(emailValide.selector, emailValide.err)
+    
   }
 })
 
-//birthday
+//birthdate
 const dateRegex = /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
 
 function isValidDate(value){
@@ -172,17 +164,13 @@ formData[3].addEventListener("change", function(event){
   if(isValidDate(value)){
     isValid(event);
     birthdayValide.valide = true;
-    if(formData[3].childElementCount >= 5){
-      formData[3].childNodes[7].remove()
-      }
+    hideFieldError(birthdayValide.selector)
+   
   }else{
     isNotValid(event)
     birthdayValide.valide= false ;
-    if(formData[3].childElementCount <5){
-      formData[3].appendChild(createElement("div")).innerHTML=(validations[3].err);
-      formData[3].childNodes[7].classList.add("err-input-response");
+    showFieldError(birthdayValide.selector, birthdayValide.err)
     
-      }
     
   }
 })
@@ -196,18 +184,15 @@ formData[4].addEventListener("change", function (event){
   if (  !isValidNumber(value) || value < 0){
     isNotValid(event)
     numberOfParticipationValide.valide = false;
-    if(formData[4].childElementCount < 4 || value.length == 0){
-      formData[4].appendChild(createElement("div")).innerHTML=(validations[4].err)
-      formData[4].childNodes[6].classList.add("err-input-response");
-      }
+    showFieldError(numberOfParticipationValide.selector, numberOfParticipationValide.err)
+   
     
   }
   else{
     isValid(event)
     numberOfParticipationValide.valide = true;
-    if(formData[4].childElementCount >= 4 ){
-      formData[4].childNodes[6].remove()
-      }
+    hideFieldError(numberOfParticipationValide.selector)
+    
    
   }
 });
@@ -218,18 +203,15 @@ formData[5].addEventListener("change", function (e){
  
   if(value){
     cityValide.valide = true
-    if(formData[5].childElementCount >= 15){
-      formData[5].childNodes[7].remove()
-      }
+    hideFieldError(cityValide.selector)
+    
     
   }
   
     else{
-    formData[5].childNodes[7].remove()
-    if(formData[5].childElementCount < 15){
-      formData[5].appendChild(createElement("div")).innerHTML=(validations[5].err)
-      formData[5].childNodes[7].classList.add("err-input-response");
-      }
+      showFieldError(cityValide.selector , cityValide.err)
+      cityValide.valide = false
+    
     
     
 }
@@ -243,25 +225,20 @@ const cgu = document.getElementById("checkbox1")
 const childCgu = 
 cgu.addEventListener("change", function (e){
   let value = e.target.checked;
-  let valueTest= true;
+
+  
+  
   if(value){
     cguValide.valide = true;
-    formData[6].childNodes[13].remove()
-    if(formData[6].childElementCount >= 7){
-      formData[6].childNodes[13].remove()
-      }
-
+    hideFieldError(cguValide.selector)
+   
   }
   
   else {
     
     cguValide.valide = false;
-    if(formData[6].childElementCount < 7){
-      formData[6].appendChild(createElement("div")).innerHTML=(validations[6].err)
-      formData[6].childNodes[13].classList.add("err-input-response");
-      }
-    valueTest = false;
-     
+    showFieldError(cguValide.selector, cguValide.err)
+    
   
   }
 })
@@ -304,7 +281,10 @@ btnSubmit.addEventListener("click",function(e){
   
     }
     else{
-   
+    const invalidfields = validations.filter(validation =>(!validation.valide))
+    invalidfields.forEach(function (validation){
+      showFieldError(validation.selector, validation.err)
+    })
     e.stopPropagation()
     }
 
