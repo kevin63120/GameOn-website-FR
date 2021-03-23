@@ -56,10 +56,7 @@ function closeModal(){
   modalbg.style.display = "none";
 }
 
-//
-
 // verification of form
-
 function isNotValid(event){
     event.target.style.border=('#DC143C 3px solid')
    
@@ -108,25 +105,24 @@ formData[0].addEventListener('change', function(event){
     nameValide.valide = true;
     hideFieldError(nameValide.selector)  
   }
-})
+});
 
 //lastname verification
 formData[1].addEventListener('change', function(event){
   let value = event.target.value;
   if (value.length < 2 || value.length === 0 || !isLettertest(value)){
    isNotValid(event)
-   lastNameValide.valide = false;
-   
+   lastNameValide.valide = false; 
   showFieldError(lastNameValide.selector,lastNameValide.err ) 
   } 
+
   else{
     isValid(event)
     lastNameValide.valide = true ;
   hideFieldError(lastNameValide.selector)
-  
-
   }
 });
+
 //email verification
 const regexMail= /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
 
@@ -148,7 +144,7 @@ formData[2].addEventListener("change", function (event){
     showFieldError(emailValide.selector, emailValide.err)
     
   }
-})
+});
 
 //birthdate
 const dateRegex = /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
@@ -173,27 +169,26 @@ formData[3].addEventListener("change", function(event){
     
     
   }
-})
+});
+
 const numberRegex= /[0-9]/;
 function isValidNumber(value){
   return numberRegex.test(value)
 }
+
 //participation in a competiton
 formData[4].addEventListener("change", function (event){
   let value = event.target.value;
   if (  !isValidNumber(value) || value < 0){
     isNotValid(event)
     numberOfParticipationValide.valide = false;
-    showFieldError(numberOfParticipationValide.selector, numberOfParticipationValide.err)
-   
-    
+    showFieldError(numberOfParticipationValide.selector, numberOfParticipationValide.err) 
   }
+
   else{
     isValid(event)
     numberOfParticipationValide.valide = true;
     hideFieldError(numberOfParticipationValide.selector)
-    
-   
   }
 });
 
@@ -203,18 +198,13 @@ formData[5].addEventListener("change", function (e){
  
   if(value){
     cityValide.valide = true
-    hideFieldError(cityValide.selector)
-    
-    
+    hideFieldError(cityValide.selector) 
   }
   
-    else{
+  else{
       showFieldError(cityValide.selector , cityValide.err)
       cityValide.valide = false
-    
-    
-    
-}
+  }
 
 })
 
@@ -225,21 +215,14 @@ const cgu = document.getElementById("checkbox1")
 const childCgu = 
 cgu.addEventListener("change", function (e){
   let value = e.target.checked;
-
-  
-  
   if(value){
     cguValide.valide = true;
-    hideFieldError(cguValide.selector)
-   
+    hideFieldError(cguValide.selector) 
   }
   
   else {
-    
     cguValide.valide = false;
     showFieldError(cguValide.selector, cguValide.err)
-    
-  
   }
 })
 
@@ -247,24 +230,15 @@ cgu.addEventListener("change", function (e){
 //send verification 
 function formAsCorrect(){
   formData.forEach(function(data){
-    data.style.display="none"; })
-   
+    data.style.display="none"; }) 
     formContainer.appendChild(createElement("div")).innerHTML="Merci ! Votre réservation a été reçue."; 
     formContainer.classList.add("form-send");
-    
-    console.log(finishSendButton);
-
-  finishSendButton.innerHTML="fermer";
-  finishSendButton.addEventListener('click', function(event){
+    finishSendButton.innerHTML="fermer";
+    finishSendButton.addEventListener('click', function(event){
     event.preventDefault()
     closeModal(event)
     formContainer.classList.remove("form-send")
-   formContainer.style.display="none"
-   
-   
-    
-  
-    
+    formContainer.style.display="none"   
   })
 }
 
@@ -276,16 +250,15 @@ btnSubmit.addEventListener("click",function(e){
     const formValid = validations.every(function(validation){ return validation.valide})
 
     if(formValid){
-   
     formAsCorrect()
-  
     }
+
     else{
-    const invalidfields = validations.filter(validation =>(!validation.valide))
-    invalidfields.forEach(function (validation){
-      showFieldError(validation.selector, validation.err)
-    })
-    e.stopPropagation()
+      const invalidfields = validations.filter(validation =>(!validation.valide))
+        invalidfields.forEach(function (validation){
+        showFieldError(validation.selector, validation.err)
+      })
+      e.stopPropagation()
     }
 
  
