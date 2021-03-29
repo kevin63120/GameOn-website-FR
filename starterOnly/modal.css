@@ -32,7 +32,7 @@ img {
 
 .topnav {
   overflow: hidden;
-  margin: 3.5%;
+  margin: 4.5%;
  
   } 
   @media screen and (max-width: 768px) {
@@ -44,10 +44,24 @@ img {
     margin: 0;
     padding: 12px;
   }
+  .fa {
+    color: #FF001B;
+  }
+  .fa:hover{
+    color: white;
+  }
 }
 
 .header-logo {
     float: left;
+}
+@media screen and (max-width: 768px) {
+  .header-logo img{
+    padding: 1rem;
+    padding-left: 0.3rem;
+    width: 140px;
+  }
+  
 }
 .main-navbar {
     float: right;
@@ -118,8 +132,8 @@ main {
   font-weight: bolder;
   color: black;
   padding-top: 0.5vw;
-  padding-left: 2vw;
-  padding-right: 2vw;
+  /*padding-left: 2vw;
+  padding-right: 2vw;*/
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
@@ -546,12 +560,13 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 3rem;
     white-space: normal;
+    padding: 0 2rem 0 0;
   }
   .hero-text {
     width: 80%;
-    font-size: 1.5rem;
+    font-size: 0.81rem;
   }
   .hero-img img {
     border-radius: 10px;
